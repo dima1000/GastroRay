@@ -15,7 +15,7 @@ function formatShortDate(iso: string) {
   return d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
 }
 
-// "10:00–14:00"
+// "10:00–14:00" (фиксируем таймзону)
 function formatTimeRange(startISO: string, endISO: string) {
   const s = new Date(startISO);
   const e = new Date(endISO);
@@ -23,13 +23,12 @@ function formatTimeRange(startISO: string, endISO: string) {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-    timeZone: "Asia/Jerusalem", // <-- фиксируем TZ
+    timeZone: "Asia/Jerusalem",
   };
   return `${s.toLocaleTimeString("ru-RU", opts)}–${e.toLocaleTimeString("ru-RU", opts)}`;
 }
 
 export default function ClientBookingPelmeni({ ev }: { ev: EventItem }) {
-  // Сформируем текст со всеми доступными слотами
   const optionsText = ev.sessions
     .map((s) => `${formatShortDate(s.start)} ${formatTimeRange(s.start, s.end)}`)
     .join(" / ");
@@ -64,12 +63,13 @@ export default function ClientBookingPelmeni({ ev }: { ev: EventItem }) {
         </a>
       </div>
 
-      {/* Описание мероприятия */}
-      {ev.description && (
-        <div className="mt-6 leading-relaxed text-slate-800">
-          {ev.description}
-        </div>
-      )}
+      {/* Обновлённое описание с выделением "Не Кашерные" красным */}
+      <div className="mt-6 leading-relaxed text-slate-800">
+        Кулинарная встреча с Александрой Пеле — нутрициологом из Сибири, ценителем вкуса и натуральных продуктов. Это не
+        мастер-класс — это встреча ценителей. Готовим цветные сибирские{" "}
+        <span className="text-red-600 font-semibold">Не Кошерные</span> пельмени с креативом, пьём элитное вино,
+        наслаждаемся атмосферой, вкусом и общением.
+      </div>
     </>
   );
 }
