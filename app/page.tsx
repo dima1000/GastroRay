@@ -96,30 +96,17 @@ export default function HomePage() {
 							  /images/pelmeni-hero-1920.webp 1920w"
 					  type="image/webp"
 					/>
-					{/* запасной <img> с onError, если webp не загрузится или путь неверный */}
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 					  src={ev.image || "/images/pelmeni-hero-1600.webp"}
 					  sizes="(min-width: 1024px) 600px, (min-width: 768px) 80vw, 100vw"
 					  alt={ev.title}
 					  className="absolute inset-0 h-full w-full object-cover"
-					  onError={(e) => {
-						const el = e.currentTarget as HTMLImageElement;
-						// один раз пробуем подставить дефолт, чтобы не зациклиться
-						if (!el.dataset.fallback) {
-						  el.dataset.fallback = "1";
-						  el.src = "/images/pelmeni-hero-1600.webp";
-						} else {
-						  // если и дефолт не найден — показываем простой градиент-заглушку
-						  el.style.display = "none";
-						  const parent = el.parentElement?.parentElement; // picture -> div.relative
-						  if (parent) parent.innerHTML += '<div class="absolute inset-0 bg-slate-200" />';
-						}
-					  }}
 					/>
 				  </picture>
 				  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 				</div>
+
                 <div className="p-5">
                   <h3 className="text-lg font-semibold">{ev.title}</h3>
                   <div className="mt-2 grid gap-1 text-sm text-slate-600">
