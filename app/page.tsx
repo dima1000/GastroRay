@@ -65,26 +65,23 @@ export default function HomePage() {
 				  Сезонные мероприятия, локальные фермеры и винодельни, лучшие вина и тёплая атмосфера небольших групп.
 				</p>
 			  </div>
-			  <div
-				  className="relative rounded-2xl overflow-hidden border border-white/20 bg-white/10 min-h-[320px]"
-				  style={{ aspectRatio: "4 / 5" }} // работает в браузере напрямую, без tailwind-плагинов
-				>
+			  <div className="relative rounded-2xl overflow-hidden border border-white/20 bg-white/10 aspect-video">
 				  <picture>
 					<source
-					  srcSet="/images/about-480.webp 480w,
-							  /images/about-800.webp 800w,
-							  /images/about-1200.webp 1200w"
+					  srcSet="/images/about-wide-800.webp 800w,
+							  /images/about-wide-1200.webp 1200w,
+							  /images/about-wide-1600.webp 1600w"
 					  type="image/webp"
 					/>
-					{/* Фоллбек на jpg (если webp нет или не найден файл) */}
+					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
-					  src="/images/about-800.jpg"               // опционально: положите такую же jpg
+					  src="/images/about-wide-1200.jpg"   // JPG фоллбек (не обязателен)
 					  alt="Наши встречи — атмосфера и вкус"
 					  className="absolute inset-0 h-full w-full object-cover"
+					  sizes="(min-width: 768px) 33vw, 100vw"
 					/>
 				  </picture>
 				</div>
-
 			</div>
 		  </div>
 		</section>
