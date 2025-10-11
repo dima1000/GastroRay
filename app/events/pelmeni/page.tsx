@@ -1,6 +1,7 @@
 import { MapPin, Banknote, Clock } from "lucide-react";
 import ClientBookingPelmeni from "./ClientBookingPelmeni";
 import { getEventBySlug } from "../../lib/events";
+import SmartImage from "../../components/SmartImage";
 
 export const dynamic = "force-dynamic";
 
@@ -32,19 +33,13 @@ export default function PelmeniPage() {
 
       <section className="max-w-5xl mx-auto px-6 py-8">
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="relative overflow-hidden rounded-2xl border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-			  src="/images/pelmeni-hero-1600.webp"
-			  srcSet="/images/pelmeni-hero-800.webp 800w,
-					  /images/pelmeni-hero-1280.webp 1280w,
-					  /images/pelmeni-hero-1600.webp 1600w,
-					  /images/pelmeni-hero-1920.webp 1920w"
-			  sizes="(min-width: 1024px) 700px, 100vw"
-			  alt="ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница"
-			  className="w-full h-full object-cover"
-			/>
-          </div>
+          <div className="relative overflow-hidden border rounded-2xl">
+			  <SmartImage
+				src={ev.image}
+				alt={ev.title}
+				maxVh={70} // можно 60–80 по вкусу
+			  />
+			</div>
 
           <div>
             <div className="space-y-2 text-slate-700">
