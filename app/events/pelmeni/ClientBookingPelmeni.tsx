@@ -29,10 +29,7 @@ function formatTimeRange(startISO: string, endISO: string) {
 }
 
 export default function ClientBookingPelmeni({ ev }: { ev: EventItem }) {
-  const optionsText = ev.sessions
-    .map((s) => `${formatShortDate(s.start)} ${formatTimeRange(s.start, s.end)}`)
-    .join(" / ");
-
+  // Фиксированный текст при записи в WhatsApp
   const wa = withMessage(
     WHATSAPP_BASE_URL,
     "Здравствуйте! Хочу записаться на «ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница». "
