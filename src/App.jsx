@@ -1,0 +1,120 @@
+import React, { useEffect, useState } from 'react'
+
+function useHashRoute() {
+  const [hash, setHash] = useState(window.location.hash || '#/')
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash || '#/')
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+  return hash.replace(/^#/, '')
+}
+
+function Page({ children }) {
+  return (
+    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+      <header className="mx-auto max-w-5xl px-4 py-6 flex items-center gap-4">
+        <img src="/logo.png" alt="Логотип" className="w-14 h-14 rounded-full shadow" />
+        <div>
+          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Гастрономический Рай</h1>
+          <p className="text-sm text-neutral-600">Сообщество о еде, вкусе и людях</p>
+        </div>
+      </header>
+      <main className="mx-auto max-w-5xl px-4 pb-24">{children}</main>
+      <footer className="border-t mt-16">
+        <div className="mx-auto max-w-5xl px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-neutral-600">
+          <span>© {new Date().getFullYear()} Гастрономический Рай</span>
+          <a className="hover:text-neutral-800" href="#/">На главную</a>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+function EventCard({ event }) {
+  return (
+    <article className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-6 md:p-8 hover:shadow-md transition-all">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h3 className="text-xl md:text-2xl font-bold leading-tight">{event.title}</h3>
+        <a href={event.href} className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold ring-1 ring-black/10 hover:ring-black/20 active:scale-[.98]">
+          Подробнее <span className="ml-1">↗</span>
+        </a>
+      </div>
+      <ul className="mt-4 grid sm:grid-cols-2 gap-3 text-sm">
+        <li>📅 Даты: {event.dates}</li>
+        <li>⏰ Время: {event.time}</li>
+        <li>📍 Адрес: {event.address}</li>
+        <li>🎟️ Стоимость: {event.price}</li>
+        <li>👥 Формат: {event.format}</li>
+        <li>☎️ Запись: <a className="underline" href={'tel:' + event.phone.replace(/\D/g, '')}>{event.phone}</a></li>
+      </ul>
+    </article>
+  )
+}
+
+function Home() {
+  const event = {
+    title: 'ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница с Александрой Пеле',
+    dates: '24.10, 14.11, 28.11',
+    time: '10:00–14:00',
+    address: 'Тель-Авив, ул. Вашингтон 20',
+    price: '300 шек. / 550 шек. за пару',
+    format: 'всего 8 мест — уютно и камерно',
+    phone: '0527-909-171',
+    href: '#/events/pelmeni-i-vino',
+  }
+  return (
+    <Page>
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold text-neutral-700">Ближайшие события</h2>
+      </section>
+      <div className="grid gap-6">
+        <EventCard event={event} />
+      </div>
+    </Page>
+  )
+}
+
+function EventDetailPelmeni() {
+  const e = {
+    title: 'ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница с Александрой Пеле',
+    dates: ['24.10', '14.11', '28.11'],
+    time: '10:00–14:00',
+    address: 'Тель-Авив, ул. Вашингтон 20',
+    price: '300 шек. / 550 шек. за пару',
+    format: 'всего 8 мест — уютно и камерно',
+    phone: '0527-909-171',
+    whatsapp: 'https://wa.me/972527909171',
+  }
+  return (
+    <Page>
+      <a href="#/" className="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 mb-6">← Назад к событиям</a>
+      <article className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-6 md:p-10">
+        <h2 className="text-2xl md:text-3xl font-extrabold leading-tight">{e.title}</h2>
+        <div className="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+          <div>📅 Даты: {e.dates.join(', ')}</div>
+          <div>⏰ Время: {e.time}</div>
+          <div>📍 Адрес: {e.address}</div>
+          <div>🎟️ Стоимость: {e.price}</div>
+          <div>👥 Формат: {e.format}</div>
+          <div>☎️ Запись: <a className="underline" href={'tel:' + e.phone.replace(/\D/g, '')}>{e.phone}</a></div>
+        </div>
+        <p className="mt-6 text-neutral-700 leading-relaxed">
+          По пятницам вместе с Александрой Пеле лепим пельмени, обсуждаем сочетания, пробуем вино и делимся идеями для домашнего гастро-досуга.
+          Мероприятие камерное: всего 8 участников. Подходит как для одного гостя, так и для пары.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <a href={'tel:' + e.phone.replace(/\D/g, '')} className="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold ring-1 ring-black/10 hover:ring-black/20">Позвонить</a>
+          <a href={e.whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold ring-1 ring-black/10 hover:ring-black/20">Написать в WhatsApp</a>
+          <a href="#/" className="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold ring-1 ring-black/10 hover:ring-black/20">К списку событий</a>
+        </div>
+      </article>
+    </Page>
+  )
+}
+
+export default function App() {
+  const route = useHashRoute()
+  if (route === '/events/pelmeni-i-vino') return <EventDetailPelmeni />
+  return <Home />
+}
