@@ -65,13 +65,18 @@ export default function HomePage() {
 				  Сезонные мероприятия, локальные фермеры и винодельни, лучшие вина и тёплая атмосфера небольших групп.
 				</p>
 			  </div>
-			  <div className="rounded-2xl bg-white/10 border border-white/20 p-4">
-				<h3 className="font-medium mb-2">Как присоединиться</h3>
-				<ul className="list-disc pl-5 space-y-1 opacity-95">
-				  <li>Выберите удобную дату ниже</li>
-				  <li>Оставьте заявку — пришлём подтверждение</li>
-				  <li>Приходите голодными и в хорошем настроении :)</li>
-				</ul>
+			  <div className="rounded-2xl overflow-hidden border border-white/20">
+				  {/* eslint-disable-next-line @next/next/no-img-element */}
+				  <img
+					src="/images/about-800.webp"
+					srcSet="/images/about-480.webp 480w,
+							/images/about-800.webp 800w,
+							/images/about-1200.webp 1200w"
+					sizes="(min-width: 768px) 33vw, 100vw"
+					alt="Наши встречи — атмосфера и вкус"
+					className="w-full h-auto object-cover"
+					style={{ aspectRatio: "4 / 5" }}
+				  />
 			  </div>
 			</div>
 		  </div>
