@@ -1,7 +1,7 @@
 "use client";
 
-import { Calendar, Share2 } from "lucide-react";
-import { formatDateRange, type EventItem } from "../../lib/events";
+import { Calendar } from "lucide-react";
+import { type EventItem } from "../../lib/events";
 import { WHATSAPP_BASE_URL } from "../../lib/config";
 
 function withMessage(baseUrl: string, message: string) {
@@ -9,64 +9,54 @@ function withMessage(baseUrl: string, message: string) {
   return `${baseUrl}${joiner}text=${encodeURIComponent(message)}`;
 }
 
-function toICS(title: string, venue: string, start: string, end: string) {
-  const escape = (s = "") => s.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
-  const dt = (d: string | Date) => new Date(d).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-  const uid = `${title}-${start}@gastroparadise.local`;
-  const ics = [
-    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//GastroParadise//Events//RU","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
-    `UID:${uid}`,`DTSTAMP:${dt(new Date())}`,`DTSTART:${dt(start)}`,`DTEND:${dt(end)}`,
-    `SUMMARY:${escape(title)}`,`LOCATION:${escape(venue)}`,
-    "END:VEVENT","END:VCALENDAR",
-  ].join("\r\n");
-  return new Blob([ics], { type: "text/calendar;charset=utf-8" });
+// "24.10"
+function formatShortDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
+}
+
+// "10:00–14:00"
+function formatTimeRange(startISO: string, endISO: string) {
+  const s = new Date(startISO);
+  const e = new Date(endISO);
+  const opts: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit" };
+  return `${s.toLocaleTimeString("ru-RU", opts)}–${e.toLocaleTimeString("ru-RU", opts)}`;
 }
 
 export default function ClientBookingPelmeni({ ev }: { ev: EventItem }) {
-  const addToCalendar = (start: string, end: string) => {
-    const blob = toICS(ev.title, ev.venue, start, end);
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${ev.title.replace(/\s+/g, "_")}.ics`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  };
+  // Сформируем текст со всеми доступными слотами
+  const optionsText = ev.sessions
+    .map((s) => `${formatShortDate(s.start)} ${formatTimeRange(s.start, s.end)}`)
+    .join(" / ");
+
+  const wa = withMessage(
+    WHATSAPP_BASE_URL,
+    `Здравствуйте! Хочу записаться на «${ev.title}». Удобные даты: ${optionsText}. Мой вариант: ____ человек(а).`
+  );
 
   return (
     <>
-      <h2 className="mt-6 font-semibold">Выберите дату</h2>
+      <h2 className="mt-6 font-semibold">Доступные даты и время</h2>
       <ul className="mt-2 space-y-2">
-        {ev.sessions.map(s => {
-          const msg = `Здравствуйте! Хочу записаться на «${ev.title}» (${formatDateRange(s.start, s.end)}).`;
-          const wa = withMessage(WHATSAPP_BASE_URL, msg);
-          return (
-            <li key={s.id} className="flex flex-wrap items-center gap-2 rounded-xl border p-3">
-              <div className="inline-flex items-center gap-2 text-sm">
-                <Calendar className="w-4 h-4" /> {formatDateRange(s.start, s.end)}
-              </div>
-              <button
-                className="ml-auto rounded-xl border bg-white px-3 py-2 text-sm hover:bg-slate-50"
-                onClick={() => addToCalendar(s.start, s.end)}
-              >
-                Добавить в календарь
-              </button>
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-xl bg-rose-600 text-white px-3 py-2 text-sm font-medium hover:bg-rose-700 inline-flex items-center gap-2"
-              >
-                Записаться <Share2 className="w-4 h-4" />
-              </a>
-            </li>
-          );
-        })}
+        {ev.sessions.map((s) => (
+          <li key={s.id} className="flex items-center gap-2 rounded-xl border p-3 text-sm">
+            <Calendar className="w-4 h-4 text-slate-600" />
+            <span className="tabular-nums">
+              {formatShortDate(s.start)} — {formatTimeRange(s.start, s.end)}
+            </span>
+          </li>
+        ))}
       </ul>
-      <div className="mt-6 leading-relaxed text-slate-800">
-        {ev.description}
+
+      <div className="mt-4">
+        <a
+          href={wa}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-xl bg-rose-600 text-white px-4 py-2 text-sm font-medium hover:bg-rose-700"
+        >
+          Записаться в WhatsApp
+        </a>
       </div>
     </>
   );
