@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo, useState } from "react";
 import { Calendar, MapPin, Search, Filter, Banknote, Clock, Users, ChefHat, Share2, X } from "lucide-react";
 
@@ -163,7 +164,7 @@ function cls(...s: (string|false|undefined)[]) { return s.filter(Boolean).join("
 export default function GastroParadiseImproved() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]["id"]>("all");
-  const [city, setCity] = useState<(typeof CITY_OPTIONS)[number]("Все города") as any;
+  const [city, setCity] = useState<(typeof CITY_OPTIONS)[number]>("Все города");
   const [month, setMonth] = useState("");
   const [showPast, setShowPast] = useState(false);
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
