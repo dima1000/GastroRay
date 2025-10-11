@@ -12,7 +12,7 @@ export const metadata = {
   description: "Всего 8 мест — уютно и камерно.",
 };
 
-// Собираем wa.me-ссылку с сообщением (как на главной)
+// wa.me + автотекст
 function withMessage(baseUrl: string, message: string) {
   const joiner = baseUrl.includes("?") ? "&" : "?";
   return `${baseUrl}${joiner}text=${encodeURIComponent(message)}`;
@@ -47,4 +47,62 @@ export default function PelmeniPage() {
               <p className="mt-1 text-slate-600">{ev.teaser}</p>
             </div>
 
-            {/* Кнопка общей связи в WhatsApp (зеленая) */}
+            {/* Зелёная кнопка WhatsApp справа */}
+            <a
+              href={waGeneral}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium text-white hover:brightness-95"
+              style={{ backgroundColor: "#25D366" }}
+            >
+              Связаться с нами в WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTENT */}
+      <section className="max-w-5xl mx-auto px-6 py-8">
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* ГОРИЗОНТАЛЬНЫЙ БЛОК 16:9 */}
+          <div className="relative overflow-hidden rounded-2xl border aspect-video">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/pelmeni-hero-1600.webp"
+              srcSet="/images/pelmeni-hero-800.webp 800w,
+                      /images/pelmeni-hero-1280.webp 1280w,
+                      /images/pelmeni-hero-1600.webp 1600w,
+                      /images/pelmeni-hero-1920.webp 1920w"
+              sizes="(min-width: 1024px) 700px, 100vw"
+              alt={ev.title}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
+
+          {/* ИНФО + БРОНЬ */}
+          <div>
+            <div className="space-y-2 text-slate-700">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" /> {ev.venue}
+              </div>
+              <div className="flex items-center gap-2">
+                <Banknote className="w-4 h-4" /> {ev.price}
+              </div>
+              {ev.spots && (
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" /> Всего {ev.spots} мест
+                </div>
+              )}
+            </div>
+
+            <ClientBookingPelmeni ev={ev} />
+          </div>
+        </div>
+      </section>
+
+      {/* ВИДЕО: Как это было */}
+      <section className="max-w-5xl mx-auto px-6 py-8 border-t">
+        <h2 className="text-2xl font-semibold mb-4">Как это было</h2>
+        <p className="text-slate-600 mb-4">Короткие фрагменты с прошлых встреч.</p>
+        <div className="grid gap-6 md:grid-cols-2">
+          <VimeoEmbed id="1126462702" title="Пельмени & Вино
