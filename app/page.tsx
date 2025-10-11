@@ -160,7 +160,7 @@ export default function GastroParadiseSimple() {
       <section className="bg-white border-b">
         <div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-rose-600 text-white grid place-items-center font-bold">GR</div>
+            <img src="/logo.png" alt="Гастрономический Рай" className="w-14 h-14 rounded-full border" />
             <div>
               <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Гастрономический Рай</h1>
               <p className="text-slate-600">Мероприятия сообщества: вкусы, люди и открытия</p>
