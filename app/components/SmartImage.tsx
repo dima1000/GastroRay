@@ -3,34 +3,35 @@
 import * as React from "react";
 
 type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
-  maxVh?: number; // макс. высота в % экрана для портретов (по умолчанию 70)
+  maxVh?: number; // высота для портретов: 60–80vh обычно
 };
 
-export default function SmartImage({ maxVh = 70, className = "", ...img }: Props) {
-  const [portrait, setPortrait] = React.useState<boolean | null>(null);
+export default function SmartImage({ maxVh = 70, className = "", style, ...img }: Props) {
+  const [isPortrait, setIsPortrait] = React.useState<boolean | null>(null);
 
   return (
     <img
       {...img}
       onLoad={(e) => {
-        const nW = e.currentTarget.naturalWidth;
-        const nH = e.currentTarget.naturalHeight;
-        setPortrait(nH > nW);
+        const el = e.currentTarget;
+        setIsPortrait(el.naturalHeight > el.naturalWidth);
       }}
-      // Общие размеры: держим соотношение 16:9, но для портретов не обрезаем
+      // ВАЖНО: картинка сама задаёт высоту
       style={{
-        aspectRatio: "16 / 9",
-        maxHeight: portrait ? `${maxVh}vh` : undefined,
-        ...img.style,
+        display: "block",
+        width: "100%",
+        height: "auto",
+        // Для альбомных добавим aspect-ratio, для портретных ограничим высоту
+        ...(isPortrait === false ? { aspectRatio: "16 / 9" } : null),
+        ...(isPortrait ? { maxHeight: `${maxVh}vh` } : null),
+        ...style,
       }}
-      className={
-        [
-          "w-full",
-          portrait ? "h-auto object-contain bg-slate-100" : "h-full object-cover",
-          "rounded-2xl", // скругление как раньше
-          className,
-        ].join(" ")
-      }
+      className={[
+        // Для портретов показываем целиком, для альбомных — заполняем блок
+        isPortrait ? "object-contain bg-slate-100" : "object-cover",
+        "rounded-2xl", // общий стиль
+        className,
+      ].join(" ")}
     />
   );
 }
