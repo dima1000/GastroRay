@@ -53,29 +53,30 @@ export default function HomePage() {
 
       {/* ОПИСАНИЕ СООБЩЕСТВА — фиолетовый фон */}
       <section id="about" className="bg-violet-600 text-white">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 py-10">
-          <div className="grid gap-6 md:grid-cols-3 items-start">
-            <div className="md:col-span-2">
-              <h2 className="text-2xl font-semibold mb-3">О сообществе «Гастрономический Рай»</h2>
-              <p className="leading-relaxed opacity-95">
-                Мы объединяем людей, которым нравится пробовать новое, общаться со шефами и узнавать кухню изнутри.
-                Делаем камерные ужины, дегустации и мастер-классы с акцентом на качество продуктов и атмосферу.
-              </p>
-              <p className="mt-3 leading-relaxed opacity-95">
-                Сезонные ингредиенты, локальные фермеры, натуральные вина и тёплая атмосфера небольших групп.
-              </p>
-            </div>
-            <div className="rounded-2xl bg-white/10 border border-white/20 p-4">
-              <h3 className="font-medium mb-2">Как присоединиться</h3>
-              <ul className="list-disc pl-5 space-y-1 opacity-95">
-                <li>Выберите удобную дату ниже</li>
-                <li>Оставьте заявку — пришлём подтверждение</li>
-                <li>Приходите голодными и в хорошем настроении :)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+		  <div className="max-w-6xl mx-auto px-6 md:px-10 py-10">
+			<div className="grid gap-6 md:grid-cols-3 items-start">
+			  <div className="md:col-span-2">
+				<h2 className="text-2xl font-semibold mb-3">О сообществе «Гастрономический Рай»</h2>
+				<p className="leading-relaxed opacity-95">
+				  Мы объединяем людей, которым нравится пробовать новое, готовить, дегустировать и узнавать кухню изнутри.
+				  Делаем камерные ужины, дегустации и мастер-классы с акцентом на качество продуктов и атмосферу.
+				</p>
+				<p className="mt-3 leading-relaxed opacity-95">
+				  Сезонные мероприятия, локальные фермеры и винодельни, лучшие вина и тёплая атмосфера небольших групп.
+				</p>
+			  </div>
+			  <div className="rounded-2xl bg-white/10 border border-white/20 p-4">
+				<h3 className="font-medium mb-2">Как присоединиться</h3>
+				<ul className="list-disc pl-5 space-y-1 opacity-95">
+				  <li>Выберите удобную дату ниже</li>
+				  <li>Оставьте заявку — пришлём подтверждение</li>
+				  <li>Приходите голодными и в хорошем настроении :)</li>
+				</ul>
+			  </div>
+			</div>
+		  </div>
+		</section>
+
 
       {/* МЕРОПРИЯТИЯ — по центру */}
       <main className="px-6 md:px-10 py-10">

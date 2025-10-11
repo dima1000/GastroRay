@@ -104,9 +104,10 @@ export default function PelmeniPage() {
       <section className="max-w-5xl mx-auto px-6 py-8 border-t">
         <h2 className="text-2xl font-semibold mb-4">Как это было</h2>
         <p className="text-slate-600 mb-4">Короткие фрагменты с прошлых встреч.</p>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-3">
           <VimeoEmbed id="1126462702" title="Пельмени & Вино — фрагмент 1" />
           <VimeoEmbed id="1126462677" title="Пельмени & Вино — фрагмент 2" />
+		  <VimeoEmbed id="1126470227" title="Кулинарная встреча пельмени и вино" />
         </div>
       </section>
     </div>
