@@ -1,8 +1,11 @@
+"use client";
+
 import { notFound } from "next/navigation";
 import { Calendar, MapPin, Banknote, Clock, Share2 } from "lucide-react";
 import { getEventBySlug, EVENTS, formatDateRange } from "@/app/lib/events";
-import { WHATSAPP_BASE_URL } from "@/app/lib/config"; // <-- НОВОЕ
+import { WHATSAPP_BASE_URL } from "@/app/lib/config";
 
+// Чтобы SSG знал какие страницы собрать
 export function generateStaticParams() {
   return EVENTS.map(e => ({ slug: e.slug }));
 }
@@ -15,7 +18,6 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-// добавим текст в ваш базовый wa.me-URL
 function withMessage(baseUrl: string, message: string) {
   const joiner = baseUrl.includes("?") ? "&" : "?";
   return `${baseUrl}${joiner}text=${encodeURIComponent(message)}`;
@@ -75,10 +77,8 @@ export default function EventPage({ params }: { params: { slug: string } }) {
             <h2 className="mt-6 font-semibold">Выберите дату</h2>
             <ul className="mt-2 space-y-2">
               {ev.sessions.map(s => {
-                const msg =
-                  `Здравствуйте! Хочу записаться на «${ev.title}» ` +
-                  `(${formatDateRange(s.start, s.end)}), место: 1-2 человека.`;
-                const wa = withMessage(W HATSAPP_BASE_URL, msg); // <-- ИСПОЛЬЗУЕМ ВАШ БАЗОВЫЙ ЛИНК
+                const msg = `Здравствуйте! Хочу записаться на «${ev.title}» (${formatDateRange(s.start, s.end)}).`;
+                const wa = withMessage(WHATSAPP_BASE_URL, msg);
                 return (
                   <li key={s.id} className="flex flex-wrap items-center gap-2 rounded-xl border p-3">
                     <div className="inline-flex items-center gap-2 text-sm">

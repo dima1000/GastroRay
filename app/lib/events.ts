@@ -20,7 +20,7 @@ export type EventItem = {
 
 export const EVENTS: EventItem[] = [
   {
-    slug: "pelmeni-vino",
+    slug: "pelmeni",
     title: "ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница",
     category: "masterclass",
     venue: "Тель-Авив, ул. Вашингтон 20",
