@@ -65,7 +65,7 @@ export default function HomePage() {
 				  Сезонные мероприятия, локальные фермеры и винодельни, лучшие вина и тёплая атмосфера небольших групп.
 				</p>
 			  </div>
-			  <div className="rounded-2xl overflow-hidden border border-white/20">
+			  <div className="relative rounded-2xl overflow-hidden border border-white/20 aspect-[4/5] bg-white/10">
 				  {/* eslint-disable-next-line @next/next/no-img-element */}
 				  <img
 					src="/images/about-800.webp"
@@ -74,10 +74,10 @@ export default function HomePage() {
 							/images/about-1200.webp 1200w"
 					sizes="(min-width: 768px) 33vw, 100vw"
 					alt="Наши встречи — атмосфера и вкус"
-					className="w-full h-auto object-cover"
-					style={{ aspectRatio: "4 / 5" }}
+					className="absolute inset-0 h-full w-full object-cover"
 				  />
-			  </div>
+				</div>
+
 			</div>
 		  </div>
 		</section>
