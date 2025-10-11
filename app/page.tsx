@@ -246,6 +246,40 @@ function ShareButton({ url, title }: { url: string; title: string }) {
   const share = async () => { if (navigator.share) { try { await navigator.share({ url, title }); } catch {} } else { await navigator.clipboard.writeText(url); alert("Ссылка скопирована"); } };
   return <button onClick={share} className="rounded-lg border bg-white px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"><Share2 className="w-4 h-4"/> Поделиться</button>;
 }
+function EventCard({ event, onOpen }: { event: EventItem; onOpen: (e: EventItem)=>void }) {
+  return (
+    <article className="group overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-shadow">
+      <div className="relative aspect-video">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={event.image} alt={event.title} className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+        <div className="absolute left-4 bottom-3 flex items-center gap-2 text-white">
+          <span className="rounded-full bg-white/20 px-2.5 py-1 text-xs backdrop-blur">{getCategoryLabel(event.category)}</span>
+          {event.spots && (
+            <span className="flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-xs backdrop-blur">
+              <Users className="w-3.5 h-3.5"/> {event.spots} мест
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="p-5">
+        <h3 className="text-lg font-semibold">{event.title}</h3>
+        <div className="mt-2 grid gap-1 text-sm text-slate-600">
+          <Row><Calendar className="w-4 h-4"/> {formatDateRange(event.start, event.end)}</Row>
+          <Row><MapPin className="w-4 h-4"/> {event.venue}, {event.city}</Row>
+          <Row><Banknote className="w-4 h-4"/> {event.price}</Row>
+        </div>
+        <p className="mt-2 text-sm text-slate-700 line-clamp-2">{event.teaser}</p>
+        <div className="mt-4 flex items-center justify-between">
+          <button className="rounded-xl bg-rose-600 text-white px-4 py-2 text-sm font-medium hover:bg-rose-700" onClick={()=>onOpen(event)}>
+            <ChefHat className="w-4 h-4 inline mr-1"/> Подробнее
+          </button>
+          <AddToCalendar event={event} />
+        </div>
+      </div>
+    </article>
+  );
+}
 function getCategoryLabel(id: Exclude<CategoryId,"all">) { return CATEGORIES.find(c => c.id === id)?.label || "Событие"; }
 
 function InfoSection({ title, children }: { title: string; children: React.ReactNode }) {
