@@ -88,74 +88,65 @@ export default function HomePage() {
 
 
       {/* МЕРОПРИЯТИЯ — по центру */}
-      <main className="px-6 md:px-10 py-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Сетка центрируется, ограничиваем ширину контейнера */}
-          <div className="grid gap-6 sm:grid-cols-1">
-            {events.map((ev) => (
-              <article
-                key={ev.slug}
-                className="group overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-shadow"
-              >
-                <div className="relative aspect-video">
-				  <picture>
-					<source
-					  srcSet="/images/pelmeni-hero-800.webp 800w,
-							  /images/pelmeni-hero-1280.webp 1280w,
-							  /images/pelmeni-hero-1600.webp 1600w,
-							  /images/pelmeni-hero-1920.webp 1920w"
-					  type="image/webp"
-					/>
-					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<img
-					  src={ev.image || "/images/pelmeni-hero-1600.webp"}
-					  sizes="(min-width: 1024px) 600px, (min-width: 768px) 80vw, 100vw"
-					  alt={ev.title}
-					  className="absolute inset-0 h-full w-full object-cover"
-					/>
-				  </picture>
-				  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-				</div>
-
-                <div className="p-5">
-                  <h3 className="text-lg font-semibold">{ev.title}</h3>
-                  <div className="mt-2 grid gap-1 text-sm text-slate-600">
-                    <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {ev.venue}</div>
-                    <div className="flex items-center gap-2"><Banknote className="w-4 h-4" /> {ev.price}</div>
-                    {ev.spots && <div className="flex items-center gap-2"><Users className="w-4 h-4" /> Всего {ev.spots} мест</div>}
-                  </div>
-
-                  {/* компактные бейджи дат: 24.10 • 14.11 • 28.11 */}
-                  <div className="mt-4">
-                    <div className="text-sm font-medium mb-1">Ближайшие даты</div>
-                    <div className="flex flex-wrap items-center gap-2 text-sm">
-                      {ev.sessions.map((s, i) => (
-                        <span key={s.id} className="inline-flex items-center">
-                          <span className="rounded-full border px-2.5 py-1 text-xs text-slate-700">
-                            {formatShortDate(s.start)}
-                          </span>
-                          {i < ev.sessions.length - 1 && (
-                            <span className="px-2 text-slate-400">•</span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <Link
-                      href={`/events/${ev.slug}`}
-                      className="inline-flex items-center justify-center rounded-xl bg-rose-600 text-white px-4 py-2 text-sm font-medium hover:bg-rose-700"
-                    >
-                      Подробнее
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
+      {/* МЕРОПРИЯТИЯ — фиксированные карточки по центру */}
+<main className="px-6 md:px-10 py-10">
+  <div className="mx-auto max-w-6xl">
+    {/* Фиксированная ширина колонки: 320–360px; центрируем сетку */}
+    <div className="grid justify-center gap-6 [grid-template-columns:repeat(auto-fill,minmax(320px,360px))]">
+      {events.map((ev) => (
+        <article
+          key={ev.slug}
+          className="overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-shadow"
+        >
+          <div className="relative aspect-video">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={ev.image}
+              alt={ev.title}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
           </div>
-        </div>
-      </main>
+
+          <div className="p-4">
+            <h3 className="text-base font-semibold leading-tight">{ev.title}</h3>
+
+            <div className="mt-2 grid gap-1 text-sm text-slate-600">
+              <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {ev.venue}</div>
+              <div className="flex items-center gap-2"><Banknote className="w-4 h-4" /> {ev.price}</div>
+              {ev.spots && <div className="flex items-center gap-2">Всего {ev.spots} мест</div>}
+            </div>
+
+            {/* компактные бейджи дат */}
+            <div className="mt-3">
+              <div className="text-xs font-medium mb-1">Ближайшие даты</div>
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                {ev.sessions.map((s, i) => (
+                  <span key={s.id} className="inline-flex items-center">
+                    <span className="rounded-full border px-2 py-0.5 text-slate-700">
+                      {new Date(s.start).toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" })}
+                    </span>
+                    {i < ev.sessions.length - 1 && <span className="px-1 text-slate-400">•</span>}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <Link
+                href={`/events/${ev.slug}`}
+                className="inline-flex items-center justify-center rounded-xl bg-rose-600 text-white px-4 py-2 text-sm font-medium hover:bg-rose-700 w-full"
+              >
+                Подробнее
+              </Link>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</main>
+
 
       {/* ФУТЕР */}
       <footer className="px-6 md:px-10 py-14 border-t bg-white">
