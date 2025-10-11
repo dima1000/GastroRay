@@ -1,11 +1,10 @@
+// app/events/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import { MapPin, Banknote, Clock } from "lucide-react";
-import { getEventBySlug, EVENTS } from "@/app/lib/events";
+import { getEventBySlug } from "@/app/lib/events";
 import ClientBooking from "./ClientBooking";
 
-export function generateStaticParams() {
-  return EVENTS.map(e => ({ slug: e.slug }));
-}
+export const dynamic = "force-dynamic"; // важное изменение: рендерим динамически
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const ev = getEventBySlug(params.slug);
@@ -42,7 +41,7 @@ export default function EventPage({ params }: { params: { slug: string } }) {
               {ev.spots && <div className="flex items-center gap-2"><Clock className="w-4 h-4" /> Всего {ev.spots} мест</div>}
             </div>
 
-            {/* Клиентская часть: выбор даты, кнопки .ics и WhatsApp */}
+            {/* Клиентская часть: выбор даты, .ics и WhatsApp */}
             <ClientBooking ev={ev} />
           </div>
         </div>
