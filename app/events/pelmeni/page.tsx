@@ -34,7 +34,16 @@ export default function PelmeniPage() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="relative overflow-hidden rounded-2xl border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ev.image} alt={ev.title} className="w-full h-full object-cover" />
+            <img
+			  src="/images/pelmeni-hero-1600.webp"
+			  srcSet="/images/pelmeni-hero-800.webp 800w,
+					  /images/pelmeni-hero-1280.webp 1280w,
+					  /images/pelmeni-hero-1600.webp 1600w,
+					  /images/pelmeni-hero-1920.webp 1920w"
+			  sizes="(min-width: 1024px) 700px, 100vw"
+			  alt="ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница"
+			  className="w-full h-full object-cover"
+			/>
           </div>
 
           <div>

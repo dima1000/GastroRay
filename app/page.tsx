@@ -83,7 +83,16 @@ export default function HomePage() {
                 <article key={ev.slug} className="group overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-shadow">
                   <div className="relative aspect-video">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={ev.image} alt={ev.title} className="absolute inset-0 h-full w-full object-cover" />
+                    <img
+					  src="/images/pelmeni-hero-1600.webp"          // fallback-изображение
+					  srcSet="/images/pelmeni-hero-800.webp 800w,
+							  /images/pelmeni-hero-1280.webp 1280w,
+							  /images/pelmeni-hero-1600.webp 1600w,
+							  /images/pelmeni-hero-1920.webp 1920w"
+					  sizes="(min-width: 1024px) 600px, (min-width: 768px) 50vw, 100vw"
+					  alt="ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница"
+					  className="absolute inset-0 h-full w-full object-cover"
+					/>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
                   </div>
                   <div className="p-5">
