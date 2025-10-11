@@ -2,6 +2,7 @@
 import { MapPin, Banknote, Clock } from "lucide-react";
 import ClientBookingPelmeni from "./ClientBookingPelmeni";
 import { getEventBySlug } from "../../lib/events";
+import VimeoEmbed from "../../components/VimeoEmbed";
 
 export const dynamic = "force-dynamic";
 
@@ -69,6 +70,16 @@ export default function PelmeniPage() {
 
             <ClientBookingPelmeni ev={ev} />
           </div>
+        </div>
+      </section>
+
+      {/* ВИДЕО: Как это было */}
+      <section className="max-w-5xl mx-auto px-6 py-8 border-t">
+        <h2 className="text-2xl font-semibold mb-4">Как это было</h2>
+        <p className="text-slate-600 mb-4">Короткие фрагменты с прошлых встреч.</p>
+        <div className="grid gap-6 md:grid-cols-2">
+          <VimeoEmbed id="1126462702" title="Пельмени & Вино — фрагмент 1" />
+          <VimeoEmbed id="1126462677" title="Пельмени & Вино — фрагмент 2" />
         </div>
       </section>
     </div>
