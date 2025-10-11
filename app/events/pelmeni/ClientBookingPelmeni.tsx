@@ -19,7 +19,12 @@ function formatShortDate(iso: string) {
 function formatTimeRange(startISO: string, endISO: string) {
   const s = new Date(startISO);
   const e = new Date(endISO);
-  const opts: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit" };
+  const opts: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Jerusalem", // <-- фиксируем TZ
+  };
   return `${s.toLocaleTimeString("ru-RU", opts)}–${e.toLocaleTimeString("ru-RU", opts)}`;
 }
 
@@ -31,7 +36,7 @@ export default function ClientBookingPelmeni({ ev }: { ev: EventItem }) {
 
   const wa = withMessage(
     WHATSAPP_BASE_URL,
-    `Здравствуйте! Хочу записаться на «${ev.title}». Удобные даты: ${optionsText}. Мой вариант: ____ человек(а).`
+    "Здравствуйте! Хочу записаться на «ПЕЛЬМЕНИ & ВИНО — Гастрономическая пятница». "
   );
 
   return (
